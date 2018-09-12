@@ -1,8 +1,8 @@
 //package com.axel.testpay.rest;
 //
-//import com.axel.testpay.model.AuthRequest;
-//import com.axel.testpay.model.AuthResponse;
-//import org.springframework.web.bind.annotation.*;
+//        import com.axel.testpay.model.AuthRequest;
+//        import com.axel.testpay.model.AuthResponse;
+//        import org.springframework.web.bind.annotation.*;
 //
 //@RestController
 //public class Authorization {

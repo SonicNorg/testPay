@@ -9,43 +9,35 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
-import org.springframework.security.oauth2.provider.token.TokenStore;
 
 @Configuration
 @EnableAuthorizationServer
 public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter {
 
-    private static String REALM="TESTPAY_OAUTH_REALM";
-
-    @Autowired
-    private TokenStore tokenStore;
-
-    @Autowired
-    private UserApprovalHandler userApprovalHandler;
 
     @Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-        oauthServer.realm(REALM+"/client");
-    }
-
-    @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("sampleClientId")
-                .authorizedGrantTypes("client-credentials")
+                .withClient("testPayClientId")
+                .authorizedGrantTypes("client_credentials")
                 .scopes("read", "write")
-                .secret("testSecret")
-                .accessTokenValiditySeconds(300);
+                .secret("secret");
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(tokenStore).userApprovalHandler(userApprovalHandler)
-                .authenticationManager(authenticationManager);
+        endpoints
+                .authenticationManager(this.authenticationManager);
+    }
+
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+        oauthServer
+                .tokenKeyAccess("permitAll()")
+                .checkTokenAccess("isAuthenticated()");
     }
 }
