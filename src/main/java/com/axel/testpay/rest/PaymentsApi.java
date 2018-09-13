@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 @RestController
 public class PaymentsApi {
 
@@ -17,7 +19,6 @@ public class PaymentsApi {
             @RequestHeader("Authorization") String authData,
             @RequestHeader("Content-type") String contentType,
             @RequestBody Payment payment) {
-        //todo: набор ифоф на проверку логики
         if (authData == null) {
             ErrorResponse error = new ErrorResponse();
             error.setErrorCode("400");
@@ -25,7 +26,8 @@ public class PaymentsApi {
             return error;
         }
         PaymentResponse response = new PaymentResponse();
-        response.setId("tralalal");
+        response.setId("random id");
+        response.setCreateDate(new Date());
         response.setState(State.createrd);
         return response;
     }
