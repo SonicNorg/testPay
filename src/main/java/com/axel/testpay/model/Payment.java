@@ -1,6 +1,6 @@
 package com.axel.testpay.model;
 
-public class Payment {
+public class Payment extends AbstractEntity {
 
     private Intent intent;
 

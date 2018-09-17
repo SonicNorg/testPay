@@ -1,6 +1,6 @@
 package com.axel.testpay.model;
 
-public class Amount {
+public class Amount extends AbstractEntity {
 
     private String value;
 

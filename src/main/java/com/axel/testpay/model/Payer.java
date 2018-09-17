@@ -1,8 +1,9 @@
 package com.axel.testpay.model;
 
-public class Payer {
+public class Payer extends AbstractEntity {
 
     private String email;
+
 
     public Payer() {
     }
@@ -14,4 +15,6 @@ public class Payer {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 }

@@ -1,34 +1,55 @@
 package com.axel.testpay.rest;
 
-import com.axel.testpay.model.ErrorResponse;
-import com.axel.testpay.model.Payment;
-import com.axel.testpay.model.PaymentResponse;
-import com.axel.testpay.model.State;
+import com.axel.testpay.dao.AmountDao;
+import com.axel.testpay.dao.PayerDao;
+import com.axel.testpay.dao.PaymentDao;
+import com.axel.testpay.dao.TransactionDao;
+import com.axel.testpay.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Date;
 
 @RestController
 public class PaymentsApi {
 
+    @Autowired
+    private TransactionDao transactionDao;
+
+    @Autowired
+    private AmountDao amountDao;
+
+    @Autowired
+    private PaymentDao paymentDao;
+
+    @Autowired
+    private PayerDao payerDao;
+
     @PostMapping(path = "/payments/payment", consumes = "application/json")
     public Object addPayment(
-            @RequestHeader("Authorization") String authData,
-            @RequestHeader("Content-type") String contentType,
-            @RequestBody Payment payment) {
-        if (authData == null) {
-            ErrorResponse error = new ErrorResponse();
-            error.setErrorCode("400");
-            error.setErrorDescription("Bad Request");
-            return error;
-        }
-        PaymentResponse response = new PaymentResponse();
-        response.setId("random id");
-        response.setCreateDate(new Date());
-        response.setState(State.createrd);
-        return response;
+            @RequestBody Payment payment
+    ) {
+//        Amount amount = new Amount();
+//        amount.setCurrency("USD");
+//        amount.setValue("225.5");
+//        amountDao.createAmount(amount);
+//        Transaction transaction = new Transaction();
+//        transaction.setAmount(amount);
+//        transaction.setExternalId("test ext id");
+//        transaction.setDescription("test dessc");
+//        transaction.setId(142);
+//        transactionDao.createTransaction(transaction);
+//        Transaction transactionById = transactionDao.getTransactionById(142);
+//        Payer payer = new Payer();
+//        payer.setEmail("test@gmail.com");
+//        payerDao.createPayer(payer);
+//        Payment payment = new Payment();
+//        payment.setPayer(payer);
+//        payment.setTransaction(transaction);
+//        payment.setIntent(Intent.order);
+//        payment.setNotificationUrl("test");
+//        paymentDao.createPayment(payment);
+//        paymentDao.getPaymentById(0);
+        return 1;
     }
 }
