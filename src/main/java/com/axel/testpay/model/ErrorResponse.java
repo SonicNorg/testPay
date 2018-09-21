@@ -1,6 +1,6 @@
 package com.axel.testpay.model;
 
-public class ErrorResponse {
+public class ErrorResponse extends AbstractResponse {
 
     private String errorCode;
     private String errorDescription;

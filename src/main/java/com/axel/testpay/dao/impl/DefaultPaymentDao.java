@@ -12,6 +12,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class DefaultPaymentDao implements PaymentDao {
 
@@ -33,10 +35,10 @@ public class DefaultPaymentDao implements PaymentDao {
         if (payment.getTransaction() == null || payment.getPayer() == null) {
             throw new IllegalStateException("Invalid Payment data");
         }
-        String sql = "INSERT INTO payment (id, intent, notification_url, payer_id, transaction_id) " +
-                "VALUES (?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, payment.getId(), Intent.order.toString(),
-                payment.getNotificationUrl(), payment.getPayer().getId(), payment.getTransaction().getId());
+        String sql = "INSERT INTO payment (id, intent, notification_url, state, payer_id, transaction_id) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, payment.getId(), Intent.order.toString(), payment.getNotificationUrl(),
+                payment.getState().toString(), payment.getPayer().getId(), payment.getTransaction().getId());
     }
 
     @Override
@@ -44,9 +46,10 @@ public class DefaultPaymentDao implements PaymentDao {
         if (payment.getTransaction() == null || payment.getPayer() == null) {
             throw new IllegalStateException("Invalid Payment data");
         }
-        String sql = "UPDATE payment SET intent = ?, notification_url = ?, payer_id = ?, transaction_id = ?";
-        jdbcTemplate.update(sql, payment.getIntent(),
-                payment.getNotificationUrl(), payment.getPayer().getId(), payment.getTransaction().getId());
+        String sql = "UPDATE payment SET intent = ?, notification_url = ?, state = ?, payer_id = ?, transaction_id = ? WHERE id = ?";
+        jdbcTemplate.update(sql, payment.getIntent().toString(),
+                payment.getNotificationUrl(),payment.getState().toString(),
+                payment.getPayer().getId(), payment.getTransaction().getId(), payment.getId());
     }
 
     @Override
@@ -65,5 +68,12 @@ public class DefaultPaymentDao implements PaymentDao {
         String sql = QuerryUtils.getSelectQueryForEntity("payment", id);
         RowMapper<Payment> rowMapper = new PaymentMapper(payerDao, transactionDao);
         return this.jdbcTemplate.queryForObject(sql, rowMapper);
+    }
+
+    @Override
+    public List<Payment> getCreatedPayments() {
+        String sql = "SELECT * FROM payment WHERE state='created'";
+        RowMapper<Payment> rowMapper = new PaymentMapper(payerDao, transactionDao);
+        return jdbcTemplate.query(sql, rowMapper);
     }
 }

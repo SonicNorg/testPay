@@ -1,9 +1,13 @@
 package com.axel.testpay.model;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
+
 public class Transaction extends AbstractEntity {
 
+    @JsonSetter("external_id")
     private String externalId;
     private Amount amount;
+    @JsonSetter("description")
     private String description;
 
     public String getExternalId() {

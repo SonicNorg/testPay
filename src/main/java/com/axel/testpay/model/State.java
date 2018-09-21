@@ -1,7 +1,7 @@
 package com.axel.testpay.model;
 
 public enum State {
-    createrd,
+    created,
     approved,
     failed
 }

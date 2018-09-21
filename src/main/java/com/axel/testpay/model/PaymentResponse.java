@@ -2,9 +2,9 @@ package com.axel.testpay.model;
 
 import java.util.Date;
 
-public class PaymentResponse {
+public class PaymentResponse extends AbstractResponse {
     private String id;
-    private Date createDate;
+    private String createDate;
     private State state;
 
     public String getId() {
@@ -15,11 +15,11 @@ public class PaymentResponse {
         this.id = id;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 

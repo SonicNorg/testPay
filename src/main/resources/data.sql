@@ -21,8 +21,16 @@ CREATE TABLE payment (
     id IDENTITY ,
     intent ENUM('order') ,
     notification_url VARCHAR (255) ,
+    state ENUM ('created', 'approved', 'failed') ,
     payer_id INT NOT NULL ,
     FOREIGN KEY (payer_id) references payer(id) ,
     transaction_id INT NOT NULL ,
     FOREIGN KEY (transaction_id) references transacts(id)
+);
+
+CREATE TABLE resended_payment (
+    id IDENTITY ,
+    id_payment INT NOT NULL ,
+    FOREIGN KEY (id_payment) REFERENCES payment(id) ,
+    resend_count INT NOT NULL
 );

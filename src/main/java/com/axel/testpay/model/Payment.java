@@ -1,14 +1,19 @@
 package com.axel.testpay.model;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
+
 public class Payment extends AbstractEntity {
 
     private Intent intent;
 
+    @JsonSetter("notification_url")
     private String notificationUrl;
 
     private Payer payer;
 
     private Transaction transaction;
+
+    private State state;
 
     public Intent getIntent() {
         return intent;
@@ -40,6 +45,14 @@ public class Payment extends AbstractEntity {
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     public Payment() {
